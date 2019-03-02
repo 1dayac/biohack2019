@@ -8,7 +8,7 @@ def create_config(r1, r2, gmap, star, nt, outdir, m, t):
     data = {}
     data['r1'] = r1
     data['r2'] = r2
-    data['sample'] = r1[:r1.find('_')]
+    data['sample'] = r1[r1.rfind('/') + 1:r1.find('_')]
     data['star_index'] = star
     data['gmap_index'] = gmap
     data['blast_db'] = nt + "/nt" if nt != "" else "None"
