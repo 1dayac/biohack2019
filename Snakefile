@@ -65,7 +65,7 @@ rule map_contigs:
     shell:
         """
         mkdir -p gmap
-        {GMAP} -D {GMAP_GENOME_DIR} -d {GMAP_GENOME_DIR}/index/ {input.transcripts} --format=samse -t {THREADS} -O >{output.alignments}
+        {GMAP} -D {GMAP_GENOME_DIR} -d index/ {input.transcripts} --format=samse -t {THREADS} -O >{output.alignments}
         """
 
 rule sam_to_vcf:
