@@ -36,19 +36,19 @@ rule extract_poorly_mapped:
     input:
         star_bam='star/{sample}.bam'
     output:
-        unmapped_left='unmapped_reads/{sample}_R1.fastq',
-        unmapped_right='unmapped_reads/{sample}_R2.fastq'
+        unmapped_left='unmapped_reads/{sample}_unmapped_R1.fastq',
+        unmapped_right='unmapped_reads/{sample}_unmapped_R2.fastq'
     shell:
         """
-        {GIT_ROOT}/bxtools/bin/bxtools filter {input.star_bam} -b -s 0.05 -q 10 >star/{sample}_unmapped.bam
+        {GIT_ROOT}/bxtools/bin/bxtools filter {input.star_bam} -b -s 0.05 -q 10 >star/{wildcards.sample}_unmapped.bam
         mkdir -p unmapped_reads
-        {GIT_ROOT}/bxtools/bin/bxtools bamtofastq star/{sample}_unmapped.bam unmapped_reads
+        {GIT_ROOT}/bxtools/bin/bxtools bamtofastq star/{wildcards.sample}_unmapped.bam unmapped_reads
         """
 
 rule assemble_poorly_mapped:
     input:
-        unmapped_left='unmapped_reads/{sample}_R1.fastq',
-        unmapped_right='unmapped_reads/{sample}_R2.fastq'
+        unmapped_left='unmapped_reads/{sample}_unmapped_R1.fastq',
+        unmapped_right='unmapped_reads/{sample}_unmapped_R2.fastq'
     output:
         transcripts='{sample}.fasta'
     shell:
@@ -75,5 +75,5 @@ rule sam_to_vcf:
             vcf='{sample}.vcf'
     shell:
         """
-        {GIT_ROOT}/sam_to_vcf.py {input.transcripts} {output.vcf}
+        python {GIT_ROOT}/sam_to_vcf.py {input.transcripts} {output.vcf}
         """
