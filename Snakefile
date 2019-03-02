@@ -9,7 +9,7 @@ GIT_ROOT=config["root"]
 BLAST_DB=config["blast_db"]
 GMAP=config["gmap"]
 STAR=config["star"]
-GMAP_INDEX=config["gmap_index"]
+GMAP_GENOME_DIR=config["gmap_genome"]
 STAR_INDEX=config["star_index"]
 SAMTOOLS=config["samtools"]
 RNASPADES=config["rnaspades"]
@@ -68,7 +68,7 @@ rule map_contigs:
     shell:
         """
         mkdir -p gmap
-        {GMAP} -D ./ -d {GMAP_INDEX} {input.transcripts} --format=samse -t {THREADS} -O >{output.alignments}
+        {GMAP} -D {GMAP_GENOME_DIR} -d {GMAP_GENOME_DIR}/index/ {input.transcripts} --format=samse -t {THREADS} -O >{output.alignments}
         """
 
 rule sam_to_vcf:
