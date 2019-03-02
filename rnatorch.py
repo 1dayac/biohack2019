@@ -4,7 +4,7 @@ import json
 from shutil import copy2
 from subprocess import call, Popen
 
-def create_config(r1, r2, star, gmap, nt, outdir, m, t):
+def create_config(r1, r2, gmap, star, nt, outdir, m, t):
     data = {}
     data['r1'] = r1
     data['r2'] = r2
@@ -45,14 +45,14 @@ def restart(outdir):
 @click.option('--outdir', nargs = 1, required = True)
 @click.option('-m', default = 100, nargs = 1, help = 'Available memory specified in gygabytes')
 @click.option('-t', default = 8, nargs = 1, help = 'Number of threads')
-def run(r1, r2, star, nt, outdir, m, t):
+def run(r1, r2, gmap, star, nt, outdir, m, t):
     """Run RNA SV pipeline."""
     try:
         mkdir(outdir)
     except:
         print("Output folder can't be created")
         return -1
-    create_config(r1, r2, star, nt, outdir, m, t)
+    create_config(r1, r2, gmap, star, nt, outdir, m, t)
     copy2(path.dirname(path.realpath(__file__)) + "/path_to_executables_config.json", outdir)
     copy2(path.dirname(path.realpath(__file__)) + "/Snakefile", outdir)
     mkdir(outdir + "/sample")
