@@ -32,7 +32,7 @@ rule align_reads_with_star:
     shell:
         """
         mkdir -p star
-        {STAR} --runThreadN {THREADS} --genomeDir {STAR_INDEX} --readFilesIn {input.r1} {input.r2} ---outFileNamePrefix star/{sample} --outSAMstrandField intronMotif --chimSegmentMin 20 --readFilesCommand zcat --outSAMmapqUnique 50
+        {STAR} --runThreadN {THREADS} --genomeDir {STAR_INDEX} --readFilesIn {input.r1} {input.r2} ---outFileNamePrefix star/{wildcards.sample} --outSAMstrandField intronMotif --chimSegmentMin 20 --readFilesCommand zcat --outSAMmapqUnique 50
         """
 
 rule extract_poorly_mapped:
