@@ -1,10 +1,16 @@
 import click
+from os import mkdir, path, symlink, chdir
+import json
+from shutil import copy2
+from subprocess import call, Popen
 
-def create_config(r1, r2, star, nt, outdir, m, t):
+def create_config(r1, r2, star, gmap, nt, outdir, m, t):
     data = {}
     data['r1'] = r1
     data['r2'] = r2
-    data['star'] = star
+    data['sample'] = r1[:r1.find('_')]
+    data['star_index'] = star
+    data['gmap_index'] = gmap
     data['blast_db'] = nt + "/nt" if nt != "" else "None"
     data['root'] = path.dirname(path.realpath(__file__))
     data['outdir'] = outdir
@@ -32,7 +38,8 @@ def restart(outdir):
 @main.command()
 @click.option('--r1', help = "Left Reads", required = True)
 @click.option('--r2', help = "Right Reads", required = True)
-@click.option('--star', help = "Path to GMAP index", required = True)
+@click.option('--gmap', help = "Path to GMAP index", required = True)
+@click.option('--star', help = "Path to STAR index", required = True)
 @click.option('--nt', default = "", nargs = 1, help = 'Folder containing NT database. '
                                       'If not provided filtering of non-human sequences is not performed')
 @click.option('--outdir', nargs = 1, required = True)

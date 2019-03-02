@@ -1,0 +1,7 @@
+{
+"samtools" : "samtools",
+"gmap" : "gmap",
+"star" : "star",
+"blastn" : "blastn",
+"rnaspades" : "rnaspades.py"
+}
