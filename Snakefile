@@ -25,8 +25,8 @@ rule all:
 
 rule align_reads_with_star:
     input:
-        r1='sample/{sample}_R1.fastq.gz',
-        r2='sample/{sample}_R2.fastq.gz'
+        r1='sample/{sample}_1.fastq.gz',
+        r2='sample/{sample}_2.fastq.gz'
     output:
         star_bam='star/{sample}.bam'
     shell:
